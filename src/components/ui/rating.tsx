@@ -1,49 +1,33 @@
+'use client';
+
 import React from 'react';
+import { Star } from 'lucide-react';
 
 interface RatingProps {
   value: number;
   max?: number;
-  interactive?: boolean;
-  onChange?: (rating: number) => void;
-  className?: string;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export function Rating({
-  value,
-  max = 5,
-  interactive = false,
-  onChange,
-  className,
-}: RatingProps) {
-  const [hoverRating, setHoverRating] = React.useState(0);
+export function Rating({ value, max = 5, size = 'sm' }: RatingProps) {
+  const sizeClass = {
+    sm: 'h-3 w-3',
+    md: 'h-4 w-4',
+    lg: 'h-5 w-5',
+  }[size];
 
   return (
-    <div className={className}>
-      <div className="flex gap-1">
-        {Array.from({ length: max }).map((_, i) => {
-          const rating = i + 1;
-          const isFilled = rating <= (hoverRating || value);
-
-          return (
-            <button
-              key={i}
-              onClick={() => interactive && onChange?.(rating)}
-              onMouseEnter={() => interactive && setHoverRating(rating)}
-              onMouseLeave={() => interactive && setHoverRating(0)}
-              disabled={!interactive}
-              className="transition-colors"
-            >
-              <span
-                className={`text-2xl ${
-                  isFilled ? 'text-yellow-400' : 'text-gray-300'
-                }`}
-              >
-                ★
-              </span>
-            </button>
-          );
-        })}
-      </div>
+    <div className="flex gap-0.5">
+      {Array.from({ length: max }).map((_, i) => (
+        <Star
+          key={i}
+          className={`${sizeClass} ${
+            i < Math.round(value)
+              ? 'fill-yellow-400 text-yellow-400'
+              : 'text-muted-foreground'
+          }`}
+        />
+      ))}
     </div>
   );
 }

@@ -1,25 +1,22 @@
+'use client';
+
 import React from 'react';
-import Image from 'next/image';
-import { Heart } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from './button';
-import { Badge } from './badge';
-import { cn } from '@/lib/utils';
-import { formatPrice } from '@/lib/utils';
+import { Heart, ShoppingCart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Rating } from '@/components/ui/rating';
 
 interface ProductCardProps {
   id: string;
   name: string;
   slug: string;
   price: number;
-  image?: string;
-  rating?: number;
-  reviewCount?: number;
+  rating: number;
+  reviewCount: number;
   featured?: boolean;
-  onAddToCart?: () => void;
+  onAddToCart?: (id: string) => void;
   onWishlist?: (id: string) => void;
-  isWishlisted?: boolean;
-  className?: string;
 }
 
 export function ProductCard({
@@ -27,70 +24,69 @@ export function ProductCard({
   name,
   slug,
   price,
-  image,
   rating,
   reviewCount,
   featured,
   onAddToCart,
   onWishlist,
-  isWishlisted,
-  className,
 }: ProductCardProps) {
+  const [wishlisted, setWishlisted] = React.useState(false);
+
   return (
-    <div
-      className={cn(
-        'group rounded-lg border border-border overflow-hidden hover:shadow-lg transition-all duration-300',
-        className
-      )}
-    >
+    <div className="rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow bg-background">
+      {/* Image */}
       <Link href={`/products/${slug}`}>
-        <div className="relative overflow-hidden bg-muted h-48">
-          {image && (
-            <Image
-              src={image}
-              alt={name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          )}
-          {featured && (
-            <Badge variant="default" className="absolute top-2 right-2">
-              Featured
-            </Badge>
-          )}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              onWishlist?.(id);
-            }}
-            className="absolute top-2 left-2 p-2 bg-background/80 rounded-full hover:bg-background transition-colors"
-          >
-            <Heart
-              className={cn('h-5 w-5', isWishlisted ? 'fill-destructive text-destructive' : 'text-muted-foreground')}
-            />
-          </button>
+        <div className="bg-muted h-48 flex items-center justify-center text-muted-foreground hover:bg-muted/80 transition-colors">
+          [Image]
         </div>
       </Link>
 
+      {/* Content */}
       <div className="p-4">
-        <Link href={`/products/${slug}`}>
-          <h3 className="font-semibold text-sm line-clamp-2 hover:text-primary transition-colors">
-            {name}
-          </h3>
-        </Link>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <Link href={`/products/${slug}`}>
+            <h3 className="font-semibold line-clamp-2 hover:text-primary transition-colors">
+              {name}
+            </h3>
+          </Link>
+          {featured && <Badge variant="secondary">Featured</Badge>}
+        </div>
 
-        {rating !== undefined && (
-          <div className="flex items-center gap-1 mt-2 text-xs">
-            <span className="text-yellow-500">★</span>
-            <span className="font-medium">{rating.toFixed(1)}</span>
-            <span className="text-muted-foreground">({reviewCount} reviews)</span>
-          </div>
-        )}
+        {/* Rating */}
+        <div className="flex items-center gap-1 mb-3">
+          <Rating value={rating} />
+          <span className="text-xs text-muted-foreground">({reviewCount})</span>
+        </div>
 
-        <div className="mt-4 flex items-center justify-between">
-          <span className="font-bold text-lg">{formatPrice(price)}</span>
-          <Button size="sm" onClick={onAddToCart}>
-            Add
+        {/* Price */}
+        <div className="mb-4">
+          <span className="text-lg font-bold text-primary">${price.toFixed(2)}</span>
+        </div>
+
+        {/* Actions */}
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            className="flex-1"
+            onClick={() => onAddToCart?.(id)}
+          >
+            <ShoppingCart className="h-4 w-4 mr-2" />
+            Add to Cart
+          </Button>
+          <Button
+            size="icon"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setWishlisted(!wishlisted);
+              onWishlist?.(id);
+            }}
+          >
+            <Heart
+              className={`h-4 w-4 ${
+                wishlisted ? 'fill-current text-destructive' : ''
+              }`}
+            />
           </Button>
         </div>
       </div>

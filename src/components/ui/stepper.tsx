@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface StepperProps {
@@ -11,38 +14,47 @@ export function Stepper({ steps, currentStep, className }: StepperProps) {
   return (
     <div className={cn('w-full', className)}>
       <div className="flex items-center justify-between">
-        {steps.map((step, index) => {
-          const isCompleted = index < currentStep;
-          const isCurrent = index === currentStep;
-
-          return (
-            <div key={step} className="flex flex-1 items-center">
-              <div className="flex flex-col items-center flex-1">
-                <div
-                  className={cn(
-                    'flex items-center justify-center w-8 h-8 rounded-full font-semibold text-sm transition-all',
-                    isCompleted && 'bg-primary text-primary-foreground',
-                    isCurrent && 'bg-primary text-primary-foreground ring-4 ring-primary/30',
-                    !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
-                  )}
-                >
-                  {isCompleted ? '✓' : index + 1}
-                </div>
-                <span className="text-xs mt-2 text-center text-muted-foreground">
-                  {step}
-                </span>
-              </div>
-              {index < steps.length - 1 && (
-                <div
-                  className={cn(
-                    'flex-1 h-1 mx-2 rounded-full transition-all',
-                    isCompleted ? 'bg-primary' : 'bg-muted'
-                  )}
-                />
+        {steps.map((step, index) => (
+          <div key={step} className="flex flex-col items-center flex-1">
+            {/* Step Circle */}
+            <div
+              className={cn(
+                'w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-colors',
+                index <= currentStep
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground border border-border'
+              )}
+            >
+              {index < currentStep ? (
+                <Check className="h-5 w-5" />
+              ) : (
+                index + 1
               )}
             </div>
-          );
-        })}
+
+            {/* Step Label */}
+            <p
+              className={cn(
+                'text-xs mt-2 text-center',
+                index <= currentStep
+                  ? 'text-foreground font-medium'
+                  : 'text-muted-foreground'
+              )}
+            >
+              {step}
+            </p>
+
+            {/* Connector Line */}
+            {index < steps.length - 1 && (
+              <div
+                className={cn(
+                  'h-1 flex-1 mx-2 -mt-11 transition-colors',
+                  index < currentStep ? 'bg-primary' : 'bg-border'
+                )}
+              />
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

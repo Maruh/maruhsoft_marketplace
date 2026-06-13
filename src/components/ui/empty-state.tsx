@@ -1,11 +1,13 @@
+'use client';
+
 import React from 'react';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Button } from './button';
 
 interface EmptyStateProps {
-  icon?: React.ReactNode;
   title: string;
   description?: string;
+  icon?: React.ReactNode;
   action?: {
     label: string;
     onClick: () => void;
@@ -14,26 +16,19 @@ interface EmptyStateProps {
 }
 
 export function EmptyState({
-  icon,
   title,
   description,
+  icon,
   action,
   className,
 }: EmptyStateProps) {
   return (
-    <div
-      className={cn(
-        'flex flex-col items-center justify-center py-12 px-4',
-        className
-      )}
-    >
-      {icon && <div className="mb-4 text-muted-foreground text-4xl">{icon}</div>}
+    <div className={cn('flex flex-col items-center justify-center py-12 text-center', className)}>
+      {icon && <div className="mb-4 text-muted-foreground">{icon}</div>}
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
-      {description && <p className="text-muted-foreground text-center mb-6">{description}</p>}
+      {description && <p className="text-muted-foreground mb-4">{description}</p>}
       {action && (
-        <Button onClick={action.onClick} variant="outline">
-          {action.label}
-        </Button>
+        <Button onClick={action.onClick}>{action.label}</Button>
       )}
     </div>
   );
