@@ -1,0 +1,55 @@
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.6%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 84.3% 60.2%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.3% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 84.3% 60.2%;
+    --radius: 0.5rem;
+    --primary: 0 84.3% 60.2%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 3.6%;
+  }
+
+  .dark {
+    --background: 0 0% 3.6%;
+    --foreground: 0 0% 98.2%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98.2%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98.2%;
+    --muted: 0 0% 14.3%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 84.3% 60.2%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.3% 60.2%;
+    --destructive-foreground: 0 9% 9%;
+    --border: 0 0% 14.3%;
+    --input: 0 0% 14.3%;
+    --ring: 0 84.3% 60.2%;
+    --primary: 0 84.3% 60.2%;
+    --primary-foreground: 0 9% 9%;
+    --secondary: 0 0% 14.3%;
+    --secondary-foreground: 0 0% 98.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
