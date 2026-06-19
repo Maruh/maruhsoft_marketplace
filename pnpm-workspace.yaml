@@ -1,0 +1,6 @@
+allowBuilds:
+  argon2: false
+  esbuild: false
+  sharp: false
+  unrs-resolver: false
+  workerd: false

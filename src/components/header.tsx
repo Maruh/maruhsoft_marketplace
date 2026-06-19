@@ -56,7 +56,6 @@ export function Header() {
               />
               <Search className="absolute right-3 top-2.5 h-4 w-4 text-muted-foreground" />
             </div>
-          </Button>
           </div>
 
           {/* Right Actions */}
