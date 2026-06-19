@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme variables */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -43,12 +48,11 @@
     --secondary: 0 0% 14.3%;
     --secondary-foreground: 0 0% 98.2%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

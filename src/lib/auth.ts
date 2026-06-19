@@ -1,17 +1,20 @@
 import { Lucia } from 'lucia';
-import { adapter } from './db';
+import { adapterInstance } from './db';
+
 import { cookies } from 'next/headers';
 import { cache } from 'react';
 
-export const lucia = new Lucia(adapter, {
+export const lucia = new Lucia(adapterInstance, {
+
   sessionCookie: {
     attributes: {
       secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
       sameSite: 'lax' as const,
       path: '/',
     },
   },
+
+
   getUserAttributes: (attributes) => {
     return {
       id: attributes.id,
